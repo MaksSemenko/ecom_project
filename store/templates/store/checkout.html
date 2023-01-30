@@ -6,10 +6,13 @@
         <div class="col-lg-6">
             <div class="box-element" id="form-wrapper">
                 <form id="form">
+                    {% csrf_token %}
                     <div id="user-info">
                         <div class="form-field">
-                            <input required class="form-control" type="text" name="
-                            name" placeholder="Name..">
+                            <label>
+                                <input required class="form-control" type="text" name="
+                                name" placeholder="Name..">
+                            </label>
                         </div>
                         <div class="form-field">
                             <input required class="form-control" type="email" name="
@@ -19,24 +22,16 @@
                     <div id="shipping-info">
                         <hr>
                         <div class="form-field">
-                            <input class="form-control" type="text" name="
-                            address" placeholder="Address..">
+                            <input class="form-control" type="text" name="address" placeholder="Address..">
                         </div>
                         <div class="form-field">
-                            <input class="form-control" type="text" name="
-                            region" placeholder="Region..">
+                            <input class="form-control" type="text" name="region" placeholder="Region..">
                         </div>
                         <div class="form-field">
-                            <input class="form-control" type="text" name="
-                            city" placeholder="City..">
+                            <input class="form-control" type="text" name="city" placeholder="City..">
                         </div>
                         <div class="form-field">
-                            <input class="form-control" type="text" name="
-                            zipcode" placeholder="Zip code..">
-                        </div>
-                        <div class="form-field">
-                            <input class="form-control" type="text" name="
-                            country" placeholder="Country..">
+                            <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
                         </div>
                     </div>
 
@@ -76,7 +71,7 @@
 
     <script type="text/javascript">
         let shipping = '{{ order.shipping }}'
-        let total = '{{ order.get_cart_total|floatformat:2 }}'
+        let total = '{{ order.get_cart_total }}'
 
         if(shipping === 'False'){
             document.getElementById('shipping-info').innerHTML = ''
@@ -95,6 +90,9 @@
 
         let form = document.getElementById('form')
 
+        csrftoken = form.getElementsByTagName("input")[0].value
+        console.log('Newtoken:', form.getElementsByTagName("input")[0].value)
+
         form.addEventListener('submit', function(e){
             e.preventDefault()
             console.log('Form submitted...')
@@ -102,7 +100,7 @@
             document.getElementById('payment-info').classList.remove('hidden')
         })
 
-        document.getElementById('make-payment').addEventListener('click', function (e){
+        document.getElementById('make-payment').addEventListener('click', function (){
             submitFormData()
         })
 
@@ -120,20 +118,35 @@
                 'region': null,
                 'city': null,
                 'zipcode': null,
-                'country': null,
             }
             if (shipping !== 'False'){
                 shippingInfo.address = form.address.value
                 shippingInfo.region = form.region.value
                 shippingInfo.city = form.city.value
                 shippingInfo.zipcode = form.zipcode.value
-                shippingInfo.country = form.country.value
             }
 
             if (user === 'AnonymousUser'){
                 userFormData.name = form.name.value
                 userFormData.email = form.email.value
             }
+
+            let url = '/process_order/'
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+                body: JSON.stringify({'form': userFormData, 'shipping':shippingInfo})
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log('Success:', data);
+                    alert('Transaction completed');
+                    window.location.href = "{% url 'store' %}"
+
+                })
         }
     </script>
 {% endblock content %}
