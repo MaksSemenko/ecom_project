@@ -11,14 +11,14 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
     <script type="text/javascript">
-        var user = '{{ request.user }}'
+        let user = '{{ request.user }}'
 
         function getToken(name) {
-            var cookieValue = null;
+            let cookieValue = null;
             if (document.cookie && document.cookie !== '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = cookies[i].trim();
+                let cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    let cookie = cookies[i].trim();
                     if (cookie.substring(0, name.length + 1) === (name + '=')) {
                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                         break;
@@ -27,7 +27,26 @@
             }
             return cookieValue;
         }
-        var csrftoken = getToken('csrftoken');
+        let csrftoken = getToken('csrftoken');
+
+
+        function getCookie(name){
+            let cookieArr = document.cookie.split(";");
+            for(let i = 0; i < cookieArr.length; i++){
+                let cookiePair = cookieArr[i].split("=");
+                if(name === cookiePair[0].trim()){
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            return null;
+        }
+        let cart = JSON.parse(getCookie('cart'))
+        if(cart == undefined){
+            cart = {}
+            console.log('Cart was created!', cart)
+            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+        }
+        console.log('Cart:', cart)
     </script>
 
 </head>
