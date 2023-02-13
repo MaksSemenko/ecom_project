@@ -107,13 +107,13 @@
         function submitFormData(){
             console.log('Payment button clicked')
 
-            let userFormData = {
+            var userFormData = {
                 'name': null,
                 'email': null,
                 'total': total,
             }
 
-            let shippingInfo = {
+            var shippingInfo = {
                 'address': null,
                 'region': null,
                 'city': null,
@@ -126,7 +126,7 @@
                 shippingInfo.zipcode = form.zipcode.value
             }
 
-            if (user === 'AnonymousUser'){
+            if (user == 'AnonymousUser'){
                 userFormData.name = form.name.value
                 userFormData.email = form.email.value
             }
@@ -144,6 +144,8 @@
                 .then((data) => {
                     console.log('Success:', data);
                     alert('Transaction completed');
+                    cart = {}
+                    document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
                     window.location.href = "{% url 'store' %}"
 
                 })
