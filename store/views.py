@@ -11,7 +11,6 @@ from . utils import cartData, guestOrder
 def store(request):
     data = cartData(request)
     cartItems = data['cartItems']
-
     products = Product.objects.all()
     context = {'products': products, 'cartItems': cartItems}
     return render(request, 'store/store.html', context)
@@ -22,7 +21,6 @@ def cart(request):
     cartItems = data['cartItems']
     order = data['order']
     items = data['items']
-
     context = {'items': items, 'order': order, 'cartItems': cartItems}
     return render(request, 'store/cart.html', context)
 
@@ -35,6 +33,15 @@ def checkout(request):
 
     context = {'items': items, 'order': order, 'cartItems': cartItems}
     return render(request, 'store/checkout.html', context)
+
+
+def product_view(request, pk):
+    data = cartData(request)
+    product = Product.objects.get(id=pk)
+    order = data['order']
+    cartItems = data['cartItems']
+    context = {'product': product, 'order': order, 'cartItems': cartItems}
+    return render(request, 'store/product.html', context)
 
 
 def updateItem(request):

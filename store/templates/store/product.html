@@ -1,0 +1,21 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row">
+	<div style="padding:15px" class="col-lg-6">
+		<img class="resize" style="border:10px solid wheat" src="{{product.imageURL}}">
+	</div>
+
+	<div style="padding:50px" class="col-lg-6">
+
+		<h3>{{product.name}}</h3>
+		<hr>
+        <button data-product={{ product.id }} data-action="add" class="btn btn-lg
+                btn-dark btn-group-lg add-btn update-cart">Add to cart</button>
+        <hr>
+		<h2>Price: ${{product.price}}</h2>
+	</div>
+</div>
+
+{% endblock content %}
