@@ -54,7 +54,7 @@
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="{% url 'store' %}">Ecom</a>
+      <a class="navbar-brand" href="{% url 'store' %}">Store</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -62,11 +62,15 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'store' %}">Store <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{% url 'cart' %}">Cart <span class="sr-only">(current)</span></a>
           </li>
         </ul>
+          {% if user.is_authenticated %}
+          <span class="hello-msg">Hello, {{ request.user }}</span>
+          <span><a class="hello-msg" href="{% url 'logout' %}">Logout</a></span>
+          {% endif %}
         <div class="form-inline my-2 my-lg-0">
-            <a href="#" class="btn btn-warning">Login</a>
+            <a href="{% url 'login' %}" class="btn btn-warning">Login</a>
 
             <a href="{% url 'cart' %}">
                 <img  id="cart-icon" src="{% static 'images/cart.png' %}">
