@@ -2,6 +2,7 @@ import json
 import datetime
 
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -99,6 +100,15 @@ def processOrder(request):
             zipcode=data['shipping']['zipcode'],
         )
     return JsonResponse('Payment complete!', safe=False)
+
+
+def search(request):
+    data = cartData(request)
+    cartItems = data['cartItems']
+    query = request.GET.get('query')
+    products = Product.objects.filter(Q(name__icontains=query))
+    context = {'products': products, 'query': query, 'cartItems': cartItems}
+    return render(request, 'store/search.html', context)
 
 
 def register(request):

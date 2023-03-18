@@ -1,9 +1,31 @@
-body{
+html{
+  	position:relative;
+  	min-height: 100%;
+}
+
+html,body{
 	background-color: hsl(0, 0%, 98%);
+  	margin:0;
+	padding:0;
 }
 
 h1,h2,h3,h4,h5,h6{
 	color:hsl(0, 0%, 30%);
+}
+
+.pageContentWrapper{
+  margin-bottom:100px;/* Height of footer*/
+}
+
+.footer{
+    background:#6B8E23!important;
+	color: #fff;
+	padding: 10px;
+	text-align: center;
+	position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .box-element{
@@ -106,3 +128,4 @@ h1,h2,h3,h4,h5,h6{
 	color: #ffffff;
 	margin-right: 20px;
 }
+
