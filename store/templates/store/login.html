@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 	<title>Login</title>
@@ -49,7 +49,7 @@
 		}
 		.login_btn:focus {
 			box-shadow: none !important;
-			outline: 0px !important;
+			outline: 0 !important;
 		}
 		.login_container {
 			padding: 0 2rem;
@@ -59,11 +59,6 @@
 			color: white !important;
 			border: 0 !important;
 			border-radius: 0.25rem 0 0 0.25rem !important;
-		}
-		.input_user,
-		.input_pass:focus {
-			box-shadow: none !important;
-			outline: 0px !important;
 		}
 
 		#messages{
@@ -115,7 +110,11 @@
 					<div class="d-flex justify-content-center links">
 						Don't have an account? <a href="{% url 'register' %}" class="ml-2">Sign Up</a>
 					</div>
-
+				</div>
+                <div class="mt-2">
+					<div class="d-flex justify-content-center links">
+						Don't want to login? <a href="{% url 'store' %}" class="ml-2">Store</a>
+					</div>
 				</div>
 			</div>
 		</div>

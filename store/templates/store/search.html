@@ -16,7 +16,9 @@
             </div>
           </div>
       {% empty %}
-          <p style="margin-left: -10px">No notes containing "{{ query }}" found!</p>
+          <div class="search">
+              <p>No products containing "{{ query }}" found!</p>
+          </div>
       {% endfor %}
     </div>
 {% endblock %}
